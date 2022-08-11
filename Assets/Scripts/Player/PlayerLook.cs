@@ -44,7 +44,7 @@ public class PlayerLook : MonoBehaviour
         _rotation.y += rotate.x * _horizontalRotationSpeed * Time.deltaTime;
         transform.localEulerAngles = _rotation;
 
-        _verticalRotation.x = Mathf.Clamp((_verticalRotation.x + (rotate.y* Time.deltaTime * _verticalRotationSpeed)) , -45, 45);
+        _verticalRotation.x = Mathf.Clamp((_verticalRotation.x + (-rotate.y* Time.deltaTime * _verticalRotationSpeed)) , -45, 45);
         _verticalLook.transform.localEulerAngles = _verticalRotation;
     }
 }
