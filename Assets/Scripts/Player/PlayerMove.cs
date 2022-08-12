@@ -2,10 +2,12 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+[RequireComponent(typeof(Animator))]
 public class PlayerMove : MonoBehaviour
 {
     [SerializeField] private float _moveSpeed;
 
+    private Animator _animator;
     private PlayerInput _playerInput;
     private Vector2 _direction;
 
@@ -24,6 +26,11 @@ public class PlayerMove : MonoBehaviour
         _playerInput.Disable();
     }
 
+    private void Start()
+    {
+        _animator = GetComponent<Animator>();
+    }
+
     private void Update()
     {
         _direction = _playerInput.Player.Move.ReadValue<Vector2>();
@@ -39,5 +46,6 @@ public class PlayerMove : MonoBehaviour
         float scaledMoveSpeed = _moveSpeed * Time.deltaTime;
         Vector3 move = Quaternion.Euler(0, transform.eulerAngles.y, 0) * new Vector3(direction.x, 0, direction.y);
         transform.position += move * scaledMoveSpeed;
+        _animator.Play("Run");
     }
 }

@@ -47,5 +47,6 @@ public class PlayerJump : MonoBehaviour
     private void ChekingGround()
     {
         _onGround = Physics.CheckSphere(_groundCheck.position, _checkRadius, _groundMask);
+        Debug.Log(_onGround);
     }
 }
