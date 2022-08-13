@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bow : Weapon
 {
-    public override void Shoot(Transform shootPoint)
+    public override void Shoot()
     {
         Instantiate(Arrow, shootPoint.position, Quaternion.identity);
     }    

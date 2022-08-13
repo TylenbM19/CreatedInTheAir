@@ -5,9 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))] 
 public class PlayerShoot : MonoBehaviour
 {
-    [SerializeField] private Transform _shootPoint;
-
     [SerializeField] private Weapon _weapon;
+
     private PlayerInput _playerInput;
     private Animator _animator;
 
@@ -34,8 +33,6 @@ public class PlayerShoot : MonoBehaviour
  
     public void OnShoot()
     {
-        _weapon.Shoot(_shootPoint);
-        _animator.Play("Attack");
-        Debug.Log("Shoot");
+        _weapon.Shoot();
     }
 }

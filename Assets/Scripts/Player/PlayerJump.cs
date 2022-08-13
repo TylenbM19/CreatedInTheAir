@@ -2,25 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Transform))]
 [RequireComponent(typeof(LayerMask))]
+[RequireComponent(typeof(CharacterController))]
+
 public class PlayerJump : MonoBehaviour
 {
     [SerializeField] private float _forseJump;
     [SerializeField] private Transform _groundCheck;
     [SerializeField] private LayerMask _groundMask;
 
+    private PlayerInput _playerIntput; 
+    private CharacterController characterController;
     private bool _onGround;
     private float _checkRadius = 0.1f;
-    private PlayerInput _playerIntput;
-    private Rigidbody _rigidbody;
 
     private void Awake()
     {
         _playerIntput = new PlayerInput();
-        _rigidbody = GetComponent<Rigidbody>();
         _playerIntput.Player.Jump.performed += ctx => Jump();
+    }
+
+    private void Start()
+    {
+        characterController = GetComponent<CharacterController>();
     }
 
     private void OnEnable()
@@ -40,8 +45,8 @@ public class PlayerJump : MonoBehaviour
 
     private void Jump()
     {
-        if(_onGround)
-        _rigidbody.velocity = Vector3.up * _forseJump;
+        //if(_onGround)
+        characterController.Move(Vector3.up * _forseJump);
     }
 
     private void ChekingGround()
