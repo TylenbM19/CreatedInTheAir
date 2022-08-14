@@ -8,7 +8,6 @@ public class IdleScript : MonoBehaviour
     {
         if(other.TryGetComponent(out Player player))
         {
-            player.Idle();
         }
     }
 }

@@ -6,7 +6,6 @@ public class StateMashina
 {
     private State _currentState;
 
-
     public void Initialize(State startState)
     {
         _currentState = startState;

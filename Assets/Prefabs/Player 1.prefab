@@ -182,10 +182,7 @@ GameObject:
   - component: {fileID: 6557399689531709957}
   - component: {fileID: 6557399689531709956}
   - component: {fileID: 6557399689531709959}
-  - component: {fileID: 6557399689531709958}
-  - component: {fileID: 6557399689531709953}
   - component: {fileID: 6557399689531709952}
-  - component: {fileID: 6557399689531709955}
   - component: {fileID: 6557399689531709954}
   - component: {fileID: 6106790956992334526}
   m_Layer: 0
@@ -261,32 +258,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d37404d34000cd45bb88521d33b8d0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6557399689531709958
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6557399689531709965}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b868dd9fae52284ca131d72239e000c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _weapon: {fileID: 8264597304913171600, guid: c59e2f1d7a5295d4faadd9b777facb42, type: 3}
---- !u!114 &6557399689531709953
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6557399689531709965}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 559e646d44bade945b82c73046d34ed0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _moveSpeed: 10
 --- !u!114 &6557399689531709952
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -302,23 +273,6 @@ MonoBehaviour:
   _verticalRotationSpeed: 4
   _horizontalRotationSpeed: 6
   _verticalLook: {fileID: 6557399689326215329}
---- !u!114 &6557399689531709955
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6557399689531709965}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 027c7084ba290344bae92d7dd129b419, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _forseJump: 10
-  _groundCheck: {fileID: 6557399689188579511}
-  _groundMask:
-    serializedVersion: 2
-    m_Bits: 64
 --- !u!114 &6557399689531709954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -332,6 +286,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _health: 0
+  _moveSpeed: 10
+  _weapon: {fileID: 8264597304913171600, guid: c59e2f1d7a5295d4faadd9b777facb42, type: 3}
 --- !u!143 &6106790956992334526
 CharacterController:
   m_ObjectHideFlags: 0
@@ -341,7 +297,7 @@ CharacterController:
   m_GameObject: {fileID: 6557399689531709965}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Height: 1.4
   m_Radius: 0.32
