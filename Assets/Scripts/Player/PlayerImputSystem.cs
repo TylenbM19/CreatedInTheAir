@@ -9,11 +9,11 @@ public class PlayerImputSystem : MonoBehaviour
 {
     private PlayerInput _playerInput;
     
-
     private void Awake()
     {
         _playerInput = new PlayerInput();
     }
+
     private void OnEnable()
     {
         _playerInput.Enable();
