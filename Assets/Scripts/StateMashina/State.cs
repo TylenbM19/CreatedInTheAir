@@ -1,12 +1,57 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
-using UnityEngine;
+using System.Linq;
 
-public interface State
+public abstract class State
 {
-    public abstract void Enter();
+    private List<Transition> _transitions;
 
-    public virtual void Exit() { }
+    public event Action<State> NeedChangeState;
+
+    public void SetTransitions(params Transition[] transitions)
+    {
+        _transitions = transitions.ToList();
+    }
+
+    public virtual void Enter()
+    {
+        SubscribeOnTransitions();
+    }
+
+    public virtual void Exit() 
+    {
+        UnsubscribeOnTransitions();
+    }
     
-    public virtual void Update() { }
+    public  void Update() 
+    {
+
+    }
+
+    private void SubscribeOnTransitions()
+    {
+        if (_transitions == null)
+            return;
+
+        foreach (Transition transition in _transitions)
+        {
+            transition.NeedChangeState += ChangeState;
+        }
+    }
+
+    private void UnsubscribeOnTransitions()
+    {
+        if (_transitions == null)
+            return;
+
+        foreach (Transition transition in _transitions)
+        {
+            transition.NeedChangeState -= ChangeState;
+        }
+    }
+
+    public void ChangeState(State nextState)
+    {
+        NeedChangeState?.Invoke(nextState);
+    }
 }

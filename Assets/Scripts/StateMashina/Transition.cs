@@ -1,22 +1,21 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Transition : MonoBehaviour
+public abstract class Transition 
 {
-    [SerializeField] private State _targetState;
+    private State _nextState;
 
-    public State TargetState => _targetState;
-
-    public bool NeedTransit { get; protected set; }
-
-    private void Start()
+    public Transition(State nextState)
     {
-        
+        _nextState = nextState;
     }
 
-    private void Update()
+    public event Action<State> NeedChangeState;
+
+    protected void MoveNextState()
     {
-        
+        NeedChangeState?.Invoke(_nextState);
     }
 }

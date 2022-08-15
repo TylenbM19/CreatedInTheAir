@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,33 +18,22 @@ public class Player : MonoBehaviour
     private PlayerShootState _shootState;
     private PlayerJumpState _jumpState;
     private Animator _animator;
-    private PlayerInput _playerInput;
     private CharacterController _characterController;
     private bool _onGround;
     private float _checkRadius = 0.1f;
+    private float forseJump = 5;
 
     public int Money { get; private set; }
 
     private void Awake()
     {
-        _playerInput = new PlayerInput();
         _characterController = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
         _stateMashine = new StateMashina();
         _idleState = new PlayerIdleState(_animator);
-        _runState = new PlayerRunState(_animator, _playerInput, _moveSpeed, _characterController, transform);
-        _shootState = new PlayerShootState(_animator, _playerInput, _weapon);
-        _jumpState = new PlayerJumpState();
-    }
-
-    private void OnEnable()
-    {
-        _playerInput.Enable();
-    }
-
-    private void OnDisable()
-    {
-        _playerInput.Disable();
+        _runState = new PlayerRunState(_animator, _moveSpeed, _characterController, transform);
+        _shootState = new PlayerShootState(_animator, _weapon);
+        _jumpState = new PlayerJumpState(_animator, _onGround, _characterController, forseJump);
     }
 
     private void Start()
@@ -60,7 +48,7 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        ChekingGround();
+      
     }
 
     public void OnEnemyDied(int reward)
