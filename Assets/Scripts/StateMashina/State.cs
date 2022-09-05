@@ -16,11 +16,13 @@ public abstract class State
     public virtual void Enter()
     {
         SubscribeOnTransitions();
+        EnableTransitions();
     }
 
     public virtual void Exit() 
     {
         UnsubscribeOnTransitions();
+        DisableTransitions();
     }
     
     public  void Update() 
@@ -47,6 +49,21 @@ public abstract class State
         foreach (Transition transition in _transitions)
         {
             transition.NeedChangeState -= ChangeState;
+        }
+    }
+    private void EnableTransitions()
+    {
+        foreach (Transition transition in _transitions)
+        {
+            transition.Enable();
+        }
+    }
+
+    private void DisableTransitions()
+    {
+        foreach (Transition transition in _transitions)
+        {
+            transition.Disable();
         }
     }
 

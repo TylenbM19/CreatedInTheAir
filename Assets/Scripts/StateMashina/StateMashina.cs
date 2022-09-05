@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class StateMashina 
 {
+    private State _firstState;
     private State _currentState;
 
     public void Initialize(State startState)
     {
-        _currentState = startState;
+        _firstState = startState;
         _currentState.Enter();
     }
 

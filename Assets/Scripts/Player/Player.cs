@@ -1,64 +1,77 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
-[RequireComponent(typeof(Animator))]
-[RequireComponent(typeof(CharacterController))]
 public class Player : MonoBehaviour
 {
-    [SerializeField] private int _health;
-    [SerializeField] private List<IItem> _items;
-    [SerializeField] private float _moveSpeed;
-    [SerializeField] private Weapon _weapon;
-    [SerializeField] private Transform _checkGround;
-    [SerializeField] private LayerMask _groundMask;
+    [SerializeField] private int _maxHealth;
 
-    private StateMashina _stateMashine;
-    private PlayerIdleState _idleState;
-    private PlayerRunState _runState;
-    private PlayerShootState _shootState;
-    private PlayerJumpState _jumpState;
-    private Animator _animator;
-    private CharacterController _characterController;
-    private bool _onGround;
-    private float _checkRadius = 0.1f;
-    private float forseJump = 5;
 
-    public int Money { get; private set; }
+    private int _currentHealth = 0;
+    private int _currentExperience = 0;
+    private int _currentForsePerSkill = 15;
+    private int _maxForsePerSkill = 15;
+    private int _levelHero = 1;
+    private int _min = 0;
+    private int _maxExperience = 100;
 
-    private void Awake()
-    {
-        _characterController = GetComponent<CharacterController>();
-        _animator = GetComponent<Animator>();
-        _stateMashine = new StateMashina();
-        _idleState = new PlayerIdleState(_animator);
-        _runState = new PlayerRunState(_animator, _moveSpeed, _characterController, transform);
-        _shootState = new PlayerShootState(_animator, _weapon);
-        _jumpState = new PlayerJumpState(_animator, _onGround, _characterController, forseJump);
-    }
+    public static event Action<int, int> OnChanged;
+    public static event Action OnDie;
+    public static event Action<int> OnShoot;
+
 
     private void Start()
     {
-        _stateMashine.Initialize(_runState);
+        _currentHealth = _maxHealth;
+        PlayerShoot.onShooting += ChangeForseSkill;
     }
 
-    private void Update()
+    public void TakeDamage(int damage)
     {
-        _stateMashine.Update();     
+        ChangeHealth(-damage);
     }
 
-    private void FixedUpdate()
+    private void ChangeHealth(int value)
     {
-      
+        int tempCurrentHealth = Mathf.Clamp(_currentHealth + value, _min, _maxHealth);
+
+        if (tempCurrentHealth > _min)
+        {
+            OnDie?.Invoke();
+            return;
+        }
+        else if (tempCurrentHealth != _currentHealth)
+        {
+            _currentHealth = tempCurrentHealth;
+            OnChanged?.Invoke(_currentHealth, _maxExperience);
+        }
     }
 
-    public void OnEnemyDied(int reward)
+    private void ChangeProgressiv(int value)
     {
-        Money += reward;
+        int tempCurrentExperience = Mathf.Clamp(_currentExperience + value, _min, _maxExperience);
+
+        if (tempCurrentExperience <= _maxExperience)
+            ++_levelHero;
+
+        else if (tempCurrentExperience != _maxExperience)
+        {
+            _currentExperience = tempCurrentExperience;
+            OnChanged?.Invoke(_currentExperience, _maxExperience);
+        }
     }
 
-    private void ChekingGround()
+    private void ChangeForseSkill()
     {
-        _onGround = Physics.CheckSphere(_checkGround.position, _checkRadius, _groundMask);
-        Debug.Log(_onGround);
+        Debug.Log("выбор скилла");
+        int firstSkill = 1;
+        int secondSkill = 2;
+
+        if (_currentForsePerSkill != _maxForsePerSkill)
+            OnShoot?.Invoke(firstSkill);
+        else
+            OnShoot?.Invoke(secondSkill);
     }
 }

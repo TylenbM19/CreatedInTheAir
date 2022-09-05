@@ -1,37 +1,36 @@
 using UnityEngine;
 
-
 public class PlayerLook : MonoBehaviour
 {
     [SerializeField] private float _verticalRotationSpeed;
     [SerializeField] private float _horizontalRotationSpeed;
     [SerializeField] private VerticalLook _verticalLook ;
 
-    private PlayerInput _playerInput;
+    private InputSystem _inputSystem;
     private Vector2 _rotate;
     private Vector2 _rotation;
     private Vector2 _verticalRotation = Vector2.zero;
 
     private void Awake()
     {
-        _playerInput = new PlayerInput();
+        _inputSystem = new InputSystem();
     }
 
     private void OnEnable()
     {
-        _playerInput.Enable();
+        _inputSystem.Enable();
     }
 
     private void OnDisable()
     {
-        _playerInput.Disable();
+        _inputSystem.Disable();
     }
 
     private void Update()
     {
-        _rotate = _playerInput.Player.Look.ReadValue<Vector2>();
+        _rotate = _inputSystem.Player.Look.ReadValue<Vector2>();
 
-        Look(_rotate);
+            Look(_rotate);
     }
 
     private void Look(Vector2 rotate)

@@ -1,38 +1,43 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
-[RequireComponent(typeof(Animator))] 
+[RequireComponent(typeof(Animator))]
+
 public class PlayerShoot : MonoBehaviour
 {
     [SerializeField] private Weapon _weapon;
 
-    private PlayerInput _playerInput;
-    private Animator _animator;
+    public static Action onShooting;
+
+    private InputSystem _inputSystem;
 
     private void Awake()
     {
-        _playerInput = new PlayerInput();
-
-        _playerInput.Player.Shoot.performed += ctx => OnShoot();
+        _inputSystem = new InputSystem();
     }
 
-    private void Start()
-    {
-        _animator = GetComponent<Animator>();
-    }
     private void OnEnable()
     {
-        _playerInput.Enable();
+        _inputSystem.Enable();
     }
 
     private void OnDisable()
     {
-        _playerInput.Disable();
+        _inputSystem.Disable();
     }
- 
-    public void OnShoot()
+
+    private void Update()
     {
-        _weapon.Shoot();
+        _inputSystem.Player.Shoot.performed += ctx => OnShoot();
+    }
+
+    private void OnShoot()
+    {
+        //_weapon.Shoot();
+        //Debug.Log("я стрельнул");
+        onShooting?.Invoke();
     }
 }

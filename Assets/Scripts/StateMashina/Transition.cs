@@ -14,6 +14,16 @@ public abstract class Transition
 
     public event Action<State> NeedChangeState;
 
+    public virtual void Enable()
+    {
+
+    }
+
+    public virtual void Disable()
+    {
+
+    }
+
     protected void MoveNextState()
     {
         NeedChangeState?.Invoke(_nextState);
