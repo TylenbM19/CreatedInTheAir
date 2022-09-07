@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour , ITarget
 {
     [SerializeField] private int _maxHealth;
 
@@ -17,7 +17,9 @@ public class Player : MonoBehaviour
     private int _min = 0;
     private int _maxExperience = 100;
 
-    public static event Action<int, int> OnChanged;
+    public static event Action<int, int> OnChangedHealth;
+    public static event Action<int, int> OnChangedExperience;
+    public static event Action<int, int> OnChangedForsePerSkill;
     public static event Action OnDie;
     public static event Action<int> OnShoot;
 
@@ -45,7 +47,7 @@ public class Player : MonoBehaviour
         else if (tempCurrentHealth != _currentHealth)
         {
             _currentHealth = tempCurrentHealth;
-            OnChanged?.Invoke(_currentHealth, _maxExperience);
+            OnChangedHealth?.Invoke(_currentHealth, _maxExperience);
         }
     }
 
@@ -59,7 +61,7 @@ public class Player : MonoBehaviour
         else if (tempCurrentExperience != _maxExperience)
         {
             _currentExperience = tempCurrentExperience;
-            OnChanged?.Invoke(_currentExperience, _maxExperience);
+            OnChangedExperience?.Invoke(_currentExperience, _maxExperience);
         }
     }
 

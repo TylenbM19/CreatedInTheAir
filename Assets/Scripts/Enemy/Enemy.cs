@@ -1,22 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Enemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviour
 {
     [SerializeField] private int _health;
-    [SerializeField] private int _reward;
+    [SerializeField] private int _damage;
 
-    public event UnityAction Dying;
+    private int _currentHealth;
 
-    public void TakeDamage(int damage)
+    public static event UnityAction<int, int> OnDamage;
+
+    public static event UnityAction Dying;
+
+    public virtual void TakeDamage(int damage) 
     {
-        _health -= damage;
-
-        if(_health <=0)
-        {
-            Destroy(gameObject);
-        }
+        _currentHealth -= damage;
+        OnDamage?.Invoke(_currentHealth, _health);
     }
 }

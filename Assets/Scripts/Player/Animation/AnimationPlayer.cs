@@ -20,7 +20,6 @@ public class AnimationPlayer : MonoBehaviour
 
     private void Start()
     {
-        PlayerMove.ChangeAxis += Move;
         Player.OnDie += Die;
         Player.OnShoot += Shoot;
     }

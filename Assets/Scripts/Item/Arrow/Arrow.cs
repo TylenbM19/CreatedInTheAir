@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Arrow : MonoBehaviour, IItem
+public class Arrow : MonoBehaviour
 {
     [SerializeField] private int _damage;
     [SerializeField] private int _speed;

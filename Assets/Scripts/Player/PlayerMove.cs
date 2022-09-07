@@ -8,7 +8,7 @@ public class PlayerMove : MonoBehaviour
 
     private InputSystem _inputSystem;
     private Vector2 _direction;
-    public static Action<float,float> ChangeAxis;
+    public static Action<float, float> ChangeAxis;
 
 
     private void Awake()
@@ -17,7 +17,7 @@ public class PlayerMove : MonoBehaviour
         _inputSystem.Enable();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         _direction = _inputSystem.Player.Move.ReadValue<Vector2>();
         Move(_direction);
@@ -32,6 +32,6 @@ public class PlayerMove : MonoBehaviour
         float scaledMoveSpeed = _moveSpeed * Time.deltaTime;
         Vector3 moveDirection = new Vector3(direction.x, 0, direction.y);
         transform.position += moveDirection * scaledMoveSpeed;
-        ChangeAxis?.Invoke(direction.x,direction.y);
+        ChangeAxis?.Invoke(direction.x, direction.y);
     }
 }
