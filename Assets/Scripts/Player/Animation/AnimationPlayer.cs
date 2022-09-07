@@ -5,13 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class AnimationPlayer : MonoBehaviour
 {
-    private const string AnimationRun = "Run";
-    private const string AnimationBackwards = "Backwards";
-    private const string AnimationIdle = "Idle";
-    private const string AnimationNormalShoot = "NormalShoot";
-    private const string AnimationForseShoot = "ForseShoot";
-    private const string AnimationDie = "Die";
     private Animator _animator;
+    private Vector2 _direction1 = Vector2.zero;
 
     private void Awake()
     {
@@ -20,35 +15,18 @@ public class AnimationPlayer : MonoBehaviour
 
     private void Start()
     {
-        Player.OnDie += Die;
-        Player.OnShoot += Shoot;
+        PlayerMove.ChanseAxis += Move;
     }
 
-    private void Move(float x, float y)
+    private void Update()
     {
-        if (y < 0)
-            _animator.Play(AnimationBackwards);
-
-        else if (x >= 0 || y >= 0)
-            _animator.Play(AnimationRun);
-
+        Move(_direction1);
     }
 
-    private void Shoot(int shotParameter)
-    {
-        switch (shotParameter)
-        {
-            case 1:
-                _animator.Play(AnimationNormalShoot);
-                break;
-            case 2:
-                _animator.Play(AnimationForseShoot);
-                break;
-        }
-    }
 
-    private void Die()
+    private void Move(Vector2 _direction)
     {
-        _animator.Play(AnimationDie);
+        _animator.SetFloat("Y", _direction.y, 0.2f, Time.deltaTime * 0.8f);
+        _animator.SetFloat("X", _direction.x, 0.2f, Time.deltaTime * 0.8f);
     }
 }
